@@ -10,12 +10,10 @@
     <style>
         body {
             background-color: #f3f4f6;
-            /* display: flex; */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            /* padding: 1rem; */
         }
         .card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -128,7 +126,6 @@
 
             <div class="col-span-12 lg:col-span-6 grid grid-cols-4 gap-6">
               <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md p-4">
-                <!------------------iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii-->
                 <div class="bg-white rounded-full  w-full max-w-md card">
                     <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4 mx-2">Customers</h2>
                     <div class="flex items-end justify-between">
@@ -147,7 +144,6 @@
                         <canvas id="chart1"></canvas>
                     </div>
                 </div>
-    <!------------------iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii-->
 
               </div>
               <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md p-4">
@@ -212,8 +208,295 @@
               </div>  
             </div>
       
-            <div class="col-span-12 md:col-span-7 lg:col-span-6 bg-white rounded-lg shadow p-4">Earnings</div>
-            <div class="col-span-12 md:col-span-5 lg:col-span-4 bg-white rounded-lg shadow p-6">Total Sales</div>
+            <div class="col-span-12 md:col-span-7 lg:col-span-6 bg-white rounded-lg shadow p-4">
+                <div class="card">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4">Revenue
+                        </h2>
+                        <div class="gradient-bg p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-center gap-4 mb-3">
+                        <div>
+                            <p class="text-3xl font-bold text-green-600">58,672</p>
+                            <p class="text-gray-500 text-sm md:text-xs lg:text-sm mt-1">Current month</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold text-gray-800">44,791</p>
+                            <p class="text-gray-500 text-sm md:text-xs lg:text-sm mt-1">Previous month</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    
+                   
+                 
+                </div>
+            
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const ctx = document.getElementById('revenueChart').getContext('2d');
+                        
+                        const revenueData = [15000, 18000, 22000, 8672, 14005, 4500, 1400, 20000, 11000, 15000, 18000, 22000, 3000];
+                        const expenseData = [8500, 29200, 10500, 0, 26110, 5600, 24590, 10003, 29200, 10500, 0,8500, 29200 ];
+                        
+                        const labels = ['1st', '', '2nd', '', '3rd', '', '4th', '', '5th', '', '7th', '', '8th'];
+                        
+                        const chart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    {
+                                        label: 'درآمد',
+                                        data: revenueData,
+                                        borderColor: 'rgb(0,255,0)',
+                                        backgroundColor: 'rgba(139, 92, 246, 0)',
+                                        tension: 0.4,
+                                        fill: true,
+                                        pointRadius: 0,
+                                        pointBackgroundColor: 'rgb(139, 92, 246)',
+                                        pointBorderColor: '#fff',
+                                        pointBorderWidth: 0,
+                                        pointHoverRadius: 6,
+                                    },
+                                    {
+                                        label: 'هزینه',
+                                        data: expenseData,
+                                        borderColor: 'rgb(0, 0, 0)',
+                                        backgroundColor: 'rgba(239, 68, 68, 0)',
+                                        tension: 0.4,
+                                        fill: true,
+                                        pointRadius: 0,
+                                        pointBackgroundColor: 'rgb(239, 68, 68)',
+                                        pointBorderColor: '#fff',
+                                        pointBorderWidth: 0,
+                                        pointHoverRadius: 6,
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    },
+                                    tooltip: {
+                                        rtl: true,
+                                        titleFont: {
+                                            family: 'Vazirmatn'
+                                        },
+                                        bodyFont: {
+                                            family: 'Vazirmatn'
+                                        },
+                                        callbacks: {
+                                            label: function(context) {
+                                                const label = context.dataset.label || '';
+                                                return label + ': ' + context.parsed.y.toLocaleString();
+                                            }
+                                        }
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        grid: {
+                                            display: true
+                                        },
+                                        ticks: {
+                                            font: {
+                                                family: 'Vazirmatn'
+                                            }
+                                        }
+                                    },
+                                    y: {
+                                        display: true,
+                                        grid: {
+                                            display: true,
+                                            color: 'rgba(0, 0, 0, 0.05)'
+                                        },
+                                        ticks: {
+                                            // stepSize: 9000,
+                                            font: {
+                                                family: 'Vazirmatn'
+                                            },
+                                            callback: function(value) {
+                                                // نمایش اعداد به صورت فرمت شده
+                                                if (value >= 10000) {
+                                                    return (value / 1000) + 'k';
+                                                }
+                                                return value;
+                                            }
+                                        },
+                                        suggestedMin: 5000,
+                                        suggestedMax: 30000
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
+            </div>
+            <div class="col-span-12 md:col-span-5 lg:col-span-4 bg-white rounded-lg shadow p-6">Total Sales
+
+                <div class="card w-full max-w-md flex">
+                   
+                    
+                    <div class="p-5">
+                        <div class="space-y-5 w-fit">
+                            <div class="channel-item">
+                                    <div class="flex items-center gap-2">
+                                        <div class="bg-purple-500 p-2 rounded-lg">
+                                            <i class="fas fa-globe text-blue-600"></i>
+                                        </div>
+                                        <span class="mr-2 text-gray-700">Website</span>
+                                    </div>
+                            </div>
+                            
+                            <!-- آمازون -->
+                            <div class="channel-item">
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-sky-400 p-2 rounded-lg">
+                                        <i class="fab fa-amazon text-purple-600"></i>
+                                    </div>
+                                    <span class="mr-2 text-gray-700">Amazon</span>
+                                </div>
+                            </div>
+                            
+                            <!-- فلیپکارت -->
+                            <div class="channel-item">
+                                    <div class="flex items-center gap-2">
+                                        <div class="bg-green-400 p-2 rounded-lg">
+                                            <i class="fas fa-shopping-bag text-yellow-600"></i>
+                                        </div>
+                                        <span class="mr-2 text-gray-700">Flipkart</span>
+                                    </div>
+                            </div>
+                            
+                            <!-- توزیع‌کنندگان -->
+                            <div class="channel-item">
+                                    <div class="flex items-center gap-2">
+                                        <div class="bg-yellow-300 p-2 rounded-lg">
+                                            <i class="fas fa-truck text-green-600"></i>
+                                        </div>
+                                        <span class="mr-2 text-gray-700">Distibutors</span>
+                                    </div>
+                               
+                            </div>
+                            
+                            <!-- فروشگاه -->
+                            <div class="channel-item">
+                                    <div class="flex items-center gap-2">
+                                        <div class="bg-red-400 p-2 rounded-lg">
+                                            <i class="fas fa-store text-red-600"></i>
+                                        </div>
+                                        <span class="mr-2 text-gray-700">Store</span>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        
+                       
+                    </div>
+
+                    <div class="card">
+                        <div class="mb-4" style="height: 220px;">
+                          <canvas id="revenueChartt"></canvas>
+                        </div>
+                      </div>
+                      
+                      
+                      <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const debugText = document.getElementById('debugText');
+                            const ctx = document.getElementById('revenueChartt');
+                        
+                            const data = [5000, 10000, 15000, 20000, 30000];
+                            const labels = ['5%', '10%', '15%', '20%', '30%'];
+                        
+                            // آرایه رنگ‌ها برای هر میله
+                            const colors = [
+                                'rgba(139, 92, 246, 0.8)',
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(16, 185, 129, 0.8)',
+                                'rgba(251, 191, 36, 0.8)',
+                                'rgba(244, 63, 94, 0.8)'
+                            ];
+                        
+                            try {
+                                new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            label: 'درآمد',
+                                            data: data,
+                                            borderColor: colors,
+                                            backgroundColor: colors,
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: { display: false },
+                                            tooltip: {
+                                                rtl: true,
+                                                titleFont: { family: 'Vazirmatn' },
+                                                bodyFont: { family: 'Vazirmatn' },
+                                                callbacks: {
+                                                    label: function(context) {
+                                                        return 'درآمد: ' + context.parsed.y.toLocaleString();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        scales: {
+                                            x: {
+                                                grid: { display: false },
+                                                ticks: { },
+                                                   // این دو گزینه باعث باریک شدن میله‌ها می‌شوند
+                                                barPercentage: 0.1,
+                                                categoryPercentage: 0.1
+        
+                                            },
+                                            y: {
+                                                display: false,
+                                                grid: { display: false, color: 'rgba(0, 0, 0, 0.05)' },
+                                                ticks: {
+                                                   display: false
+                                                },
+                                                suggestedMin: 0,
+                                                suggestedMax: 35000
+                                            }
+                                        }
+                                    }
+                                });
+                        
+                                debugText.textContent = 'نمودار با موفقیت ایجاد شد!';
+                        
+                            } catch (error) {
+                                debugText.textContent = 'خطا در ایجاد نمودار: ' + error.message;
+                                debugText.style.color = 'red';
+                                console.error(error);
+                            }
+                        });
+                        </script>
+                        
+                      
+                </div>
+            
+               
+            </body>
+            </html>
+            </div>
             <div class="col-span-12 lg:col-span-8 bg-white rounded-lg shadow p-6">Revenue Chart</div>
           </div>
         </main>
@@ -291,136 +574,3 @@
     
   </body>
 </html>
-
-
-<!-- 
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>کارت آماری مشتریان با نمودار خطی</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-            background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
-        }
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-    </style>
-</head>
-<body>
-    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md card">
-       
-        
-        <div class="flex items-end justify-between">
-            <div>
-                <p class="text-3xl font-bold text-gray-800">62,352</p>
-                <div class="flex items-center mt-2">
-                    <span class="text-green-500 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                        </svg>
-                        6.22%
-                    </span>
-                    <span class="text-gray-500 text-sm mr-2">از ماه گذشته</span>
-                </div>
-            </div>
-            
-            <div class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-                افزایش
-            </div>
-        </div>
-        
-        <div class="mt-6" style="height: 120px;">
-            <canvas id="customerChart"></canvas>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('customerChart').getContext('2d');
-            
-            // داده‌های نمودار
-            const data = [55, 58, 56, 59, 57, 60, 62];
-            
-            // ایجاد نمودار خطی
-            const chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'],
-                    datasets: [{
-                        label: 'تعداد مشتریان',
-                        data: data,
-                        borderColor: 'rgb(59, 130, 246)',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.4,
-                        fill: true,
-                        pointRadius: 4,
-                        pointBackgroundColor: 'rgb(59, 130, 246)',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointHoverRadius: 6,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            rtl: true,
-                            titleFont: {
-                                family: 'Vazirmatn'
-                            },
-                            bodyFont: {
-                                family: 'Vazirmatn'
-                            },
-                            callbacks: {
-                                label: function(context) {
-                                    return 'مشتریان: ' + context.parsed.y;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                font: {
-                                    family: 'Vazirmatn'
-                                }
-                            }
-                        },
-                        y: {
-                            display: false,
-                            grid: {
-                                display: false
-                            },
-                            suggestedMin: Math.min(...data) - 5,
-                            suggestedMax: Math.max(...data) + 5
-                        }
-                    }
-                }
-            });
-        });
-    </script>
-</body>
-</html> -->
