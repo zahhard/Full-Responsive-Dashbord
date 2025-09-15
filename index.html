@@ -1,318 +1,426 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Tailwind Last Version</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zahra Dashboard</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
-        <!-- component -->
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            /* padding: 1rem; */
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+  </head>
+  <body class="mx-auto bg-gray-100" >
 
-        <style>
-            @import url(https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css);
-            @import url(https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css);
-        </style>
-    </head>
-    <body class="mx-auto bg-gray-100">
+
+      
+
+ <!-- row-span-2 -->
+    <!--grid-->
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-fit h-screen bg-gray-800 text-white sticky top-0 hidden md:block">
+            <img src="./assets/Logo.svg" 
+            class="mx-auto my-10 w-[30px] md:w-[70px] lg:w-[110px]" 
+            alt="Logo">
+                       <nav id="menu" class="flex flex-col gap-2">
+                <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition 
+                    bg-gray-700 border-l-4 border-white">
+                    <img src="./assets/home.svg" width="24" height="24"> 
+                    <p class="hidden lg:block mr-10">Dashboard</p>
+                </a>
+                <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition hover:bg-gray-700">
+                    <img src="./assets/icon.svg" width="24" height="24"> 
+                    <p class="hidden lg:block mr-10">Profile</p>
+                </a>
+                <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition hover:bg-gray-700">
+                    <img src="./assets/diagram.svg" width="24" height="24"> 
+                    <p class="hidden lg:block mr-10">Sales Report</p>
+                </a>
+                <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition hover:bg-gray-700">
+                    <img src="./assets/shoppingcart.svg" width="24" height="24"><p class="hidden lg:block mr-10">Order</p>
+                </a>
+                <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition hover:bg-gray-700">
+                    <img src="./assets/bag.svg" width="24" height="24"> <p class="hidden lg:block mr-10">Product</p>
+                </a>
+            </nav>
+        </aside>
+        
         <script>
-            // Formatter for numbers
-            Number.prototype.comma_formatter = function () {
-                return this.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-            };
-
-            // Function to create chart data object
-            function createChart(canvasId) {
-                return {
-                    date: "today",
-                    options: [
-                        { label: "Today", value: "today" },
-                        { label: "Last 7 Days", value: "7days" },
-                        { label: "Last 30 Days", value: "30days" },
-                        { label: "Last 6 Months", value: "6months" },
-                        { label: "This Year", value: "year" },
-                    ],
-                    selectedOption: 0,
-                    showDropdown: false,
-                    data: null,
-                    chartInstance: null,
-
-                    fetch: function () {
-                        fetch("https://cdn.jsdelivr.net/gh/swindon/fake-api@master/tailwindAlpineJsChartJsEx1.json")
-                            .then((res) => res.json())
-                            .then((res) => {
-                                console.log(res); // داده‌ها را در کنسول بررسی کنید
-                                this.data = res.dates;
-                                this.renderChart();
-                            });
-                    },
-
-                    selectOption(index) {
-                        this.selectedOption = index;
-                        this.date = this.options[index].value;
-                        this.renderChart();
-                    },
-
-                    renderChart() {
-                        if (!this.data) return;
-
-                        if (this.chartInstance) {
-                            this.chartInstance.destroy();
-                        }
-
-                        const ctx = document.getElementById(canvasId).getContext("2d");
-                        this.chartInstance = new Chart(ctx, {
-                            type: "line",
-                            data: {
-                                labels: this.data[this.date].data.labels,
-                                datasets: [
-                                    {
-                                        label: "Income",
-                                        backgroundColor: "rgba(102, 126, 234, 0.25)",
-                                        borderColor: "rgba(102, 126, 234, 1)",
-                                        pointBackgroundColor: "rgba(102, 126, 234, 1)",
-                                        data: this.data[this.date].data.income,
-                                    },
-                                ],
-                            },
-                            options: {
-                                responsive: true,
-                                // maintainAspectRatio: false,
-                                scales: {
-                                    yAxes: [{ gridLines: { display: false }, ticks: { display: false } }],
-                                    xAxes: [{ gridLines: { display: false }, ticks: { display: false } }],
-                                },
-                            },
-                        });
-                    },
-                };
-            }
-
-            // Wait for window load before initializing charts
-            window.onload = function () {
-                let charts = ["chart1", "chart2", "chart3", "chart4"].map((id) => {
-                    let c = createChart(id);
-                    c.fetch();
-                    return c;
+            const items = document.querySelectorAll(".menu-item");
+        
+            items.forEach(item => {
+                item.addEventListener("click", function () {
+                    // پاک کردن active از همه
+                    items.forEach(i => i.classList.remove("bg-gray-700", "border-l-4", "border-white"));
+                    // اضافه کردن active به آیتم انتخاب‌شده
+                    this.classList.add("bg-gray-700", "border-l-4", "border-white");
                 });
-            };
+            });
         </script>
+  
 
-        <!-- row-span-2 -->
-        <!--grid-->
-        <div class="flex">
-            <!-- Sidebar -->
-            <aside class="w-fit h-screen bg-gray-800 text-white sticky top-0 hidden md:block">
-                <img src="./assets/Logo.svg" class="mx-auto my-10 w-[30px] md:w-[70px] lg:w-[110px]" alt="Logo" />
-                <nav id="menu" class="flex flex-col gap-2">
-                    <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition bg-gray-700 border-l-4 border-white">
-                        <img src="./assets/home.svg" width="24" height="24" />
-                        <p class="hidden lg:block mr-10">Dashboard</p>
-                    </a>
-                    <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition hover:bg-gray-700">
-                        <img src="./assets/icon.svg" width="24" height="24" />
-                        <p class="hidden lg:block mr-10">Profile</p>
-                    </a>
-                    <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition hover:bg-gray-700">
-                        <img src="./assets/diagram.svg" width="24" height="24" />
-                        <p class="hidden lg:block mr-10">Sales Report</p>
-                    </a>
-                    <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition hover:bg-gray-700">
-                        <img src="./assets/shoppingcart.svg" width="24" height="24" />
-                        <p class="hidden lg:block mr-10">Order</p>
-                    </a>
-                    <a href="#" class="menu-item flex items-center gap-3 py-3 px-6 rounded transition hover:bg-gray-700">
-                        <img src="./assets/bag.svg" width="24" height="24" />
-                        <p class="hidden lg:block mr-10">Product</p>
-                    </a>
-                </nav>
-            </aside>
+        
+      
+        <!-- Main Content -->
+        <main class="flex-1 bg-gray-100">
 
-            <script>
-                const items = document.querySelectorAll(".menu-item");
 
-                items.forEach((item) => {
-                    item.addEventListener("click", function () {
-                        // پاک کردن active از همه
-                        items.forEach((i) => i.classList.remove("bg-gray-700", "border-l-4", "border-white"));
-                        // اضافه کردن active به آیتم انتخاب‌شده
-                        this.classList.add("bg-gray-700", "border-l-4", "border-white");
-                    });
-                });
-            </script>
-
-            <!-- Main Content -->
-            <main class="flex-1 bg-gray-100">
-                <div class="grid grid-cols-12 gap-6 p-6">
-                    <div class="col-span-12 rounded-lg bg-transparent">
-                        <div class="flex p-3 items-center justify-between gap-4">
-                            <!-- Title -->
-                            <div class="text-2xl font-bold text-black px-2">Dashboard</div>
-
-                            <!-- Search -->
-                            <form class="w-1/3">
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                        <svg class="w-3 h-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                        </svg>
-                                    </div>
-                                    <input type="text" placeholder="search" class="w-full text-sm py-2 ps-10 pr-3 shadow-sm rounded-full focus:outline-none focus:border-gray-200 focus:ring-1 focus:ring-gray-200 focus:shadow-md" />
-                                </div>
-                            </form>
-
-                            <div class="flex gap-5">
-                                <!-- Date -->
-                                <div class="bg-white rounded-full px-4 py-2 flex gap-1 items-center justify-center">
-                                    <p class="text-sm text-gray-500">28/02/2023</p>
-                                    <img src="./assets/downArrow.svg" alt="arrow" width="13" height="7" class="rounded-full" />
-                                </div>
-
-                                <!-- Icons -->
-                                <img src="./assets/setting.svg" alt="settings" width="24" height="24" class="rounded-full" />
-                                <img src="./assets/Notification.svg" alt="notification" width="24" height="24" class="rounded-full" />
-
-                                <!-- Avatar -->
-                                <img src="./assets/avatar.svg" alt="avatar" width="36" height="36" class="rounded-full" />
-                            </div>
+            
+          <div class="grid grid-cols-12 gap-6 p-6">
+            
+            
+            <div class="col-span-12 rounded-lg bg-transparent ">
+                <div class="flex p-3 items-center justify-between gap-4">
+                  
+                    <!-- Title -->
+                    <div class="text-2xl font-bold text-black px-2">Dashboard</div>
+                
+                    <!-- Search -->
+                    <form class="w-1/3">
+                        <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-3 h-3 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" 
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
                         </div>
+                        <input type="text" placeholder="search" 
+                            class="w-full text-sm py-2 ps-10 pr-3 shadow-sm rounded-full focus:outline-none focus:border-gray-200 focus:ring-1 focus:ring-gray-200 focus:shadow-md" />
+                        </div>
+                    </form>
+                
+                    <div class="flex gap-5">
+
+                        <!-- Date -->
+                        <div class="bg-white rounded-full px-4 py-2 flex gap-1 items-center justify-center">
+                            <p class="text-sm text-gray-500">28/02/2023</p>
+                            <img src="./assets/downArrow.svg" alt="arrow" width="13" height="7" class="rounded-full">
+                        </div>
+                    
+                        <!-- Icons -->
+                        <img src="./assets/setting.svg" alt="settings" width="24" height="24" class="rounded-full">
+                        <img src="./assets/Notification.svg" alt="notification" width="24" height="24" class="rounded-full">
+                    
+                        <!-- Avatar -->
+                        <img src="./assets/avatar.svg" alt="avatar" width="36" height="36" class="rounded-full">
                     </div>
-
-                    <div class="col-span-12 lg:col-span-6 grid grid-cols-4 gap-6">
-                        <div class="col-span-4 md:col-span-1 lg:col-span-2 bg-white rounded-lg shadow p-4">
-                            <div class="col-span-4 md:col-span-1 lg:col-span-2 bg-white rounded-lg shadow p-4">
-                                <div class="w-full max-w-2xl mx-auto bg-gray-900 flex items-center justify-center rounded-lg shadow-xl p-5" x-data="chartComponent('chart2')" x-init="fetch()">
-                                    <div class="w-full">
-                                        <div class="flex justify-between items-end mb-4">
-                                            <h3 class="text-lg font-semibold text-white">Expenses</h3>
-                                            <div class="relative" @click.away="showDropdown = false">
-                                                <button class="text-xs text-gray-300 hover:text-white px-2 py-1 rounded focus:outline-none" @click="showDropdown = !showDropdown">
-                                                    <span x-text="options[selectedOption].label"></span>
-                                                    <i class="ml-1 mdi mdi-chevron-down"></i>
-                                                </button>
-                                                <div
-                                                    class="bg-gray-700 shadow-lg rounded text-sm absolute top-full right-0 w-32 mt-1 z-30"
-                                                    x-show="showDropdown"
-                                                    style="display: none;"
-                                                    x-transition:enter="transition ease duration-300 transform"
-                                                    x-transition:enter-start="opacity-0 translate-y-2"
-                                                    x-transition:enter-end="opacity-100 translate-y-0"
-                                                    x-transition:leave="transition ease duration-300 transform"
-                                                    x-transition:leave-start="opacity-100 translate-y-0"
-                                                    x-transition:leave-end="opacity-0 translate-y-4"
-                                                >
-                                                    <ul>
-                                                        <template x-for="(item, index) in options" :key="index">
-                                                            <li class="px-4 py-2 hover:bg-gray-600 hover:text-white cursor-pointer" :class="{'text-white': index === selectedOption}" @click="selectOption(index); showDropdown = false">
-                                                                <span x-text="item.label"></span>
-                                                            </li>
-                                                        </template>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex justify-between items-end mb-5">
-                                            <h4 class="text-2xl font-bold text-white" x-text="data ? '$' + data[date].total.comma_formatter() : '$0'"></h4>
-                                            <span :class="data && data[date].upDown < 0 ? 'text-red-500' : 'text-green-500'">
-                                                <span x-text="data && data[date].upDown < 0 ? '▼' : '▲'"></span>
-                                                <span x-text="data ? data[date].upDown : 'No data'"></span>%
-                                            </span>
-                                        </div>
-                                        <div class="w-full h-64">
-                                            <canvas id="chart2" class="w-full h-full"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-span-4 md:col-span-1 lg:col-span-2 bg-white rounded-lg shadow p-4">
-                            <!-- component -->
-                            <!-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
-
-<style>
-@import url(https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css);
-@import url(https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css);
-</style> -->
-
-                            <div class="w-full bg-gray-900 flex items-center justify-center">
-                                <div class="bg-gray-800 text-gray-500 rounded shadow-xl py-5 px-5 w-full" x-data="{chartData:chartData()}" x-init="chartData.fetch()">
-                                    <div class="flex flex-wrap items-end">
-                                        <div class="flex-1">
-                                            <h3 class="text-lg font-semibold leading-tight">Income</h3>
-                                        </div>
-                                        <div class="relative" @click.away="chartData.showDropdown=false">
-                                            <button class="text-xs hover:text-gray-300 h-6 focus:outline-none" @click="chartData.showDropdown=!chartData.showDropdown">
-                                                <span x-text="chartData.options[chartData.selectedOption].label"></span><i class="ml-1 mdi mdi-chevron-down"></i>
-                                            </button>
-                                            <div
-                                                class="bg-gray-700 shadow-lg rounded text-sm absolute top-auto right-0 min-w-full w-32 z-30 mt-1 -mr-3"
-                                                x-show="chartData.showDropdown"
-                                                style="display: none;"
-                                                x-transition:enter="transition ease duration-300 transform"
-                                                x-transition:enter-start="opacity-0 translate-y-2"
-                                                x-transition:enter-end="opacity-100 translate-y-0"
-                                                x-transition:leave="transition ease duration-300 transform"
-                                                x-transition:leave-start="opacity-100 translate-y-0"
-                                                x-transition:leave-end="opacity-0 translate-y-4"
-                                            >
-                                                <span class="absolute top-0 right-0 w-3 h-3 bg-gray-700 transform rotate-45 -mt-1 mr-3"></span>
-                                                <div class="bg-gray-700 rounded w-full relative z-10 py-1">
-                                                    <ul class="list-reset text-xs">
-                                                        <template x-for="(item,index) in chartData.options">
-                                                            <li
-                                                                class="px-4 py-2 hover:bg-gray-600 hover:text-white transition-colors duration-100 cursor-pointer"
-                                                                :class="{'text-white':index==chartData.selectedOption}"
-                                                                @click="chartData.selectOption(index);chartData.showDropdown=false"
-                                                            >
-                                                                <span class="text-xs" x-text="item.label"></span>
-                                                            </li>
-                                                        </template>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-wrap items-end mb-5 justify-between">
-                                        <h4 class="text-2xl lg:text-base text-white font-bold leading-tight inline-block mr-2" x-text="'$'+(chartData.data?chartData.data[chartData.date].total.comma_formatter():0)">0</h4>
-                                        <span class="inline-block lg:text-sm" :class="chartData.data&&chartData.data[chartData.date].upDown<0?'text-red-500':'text-green-500'">
-                                            <span x-text="chartData.data&&chartData.data[chartData.date].upDown<0?'▼':'▲'">0</span> <span x-text="chartData.data?chartData.data[chartData.date].upDown:0">0</span>%
-                                        </span>
-                                    </div>
-                                    <div class="w-full h-full">
-                                        <canvas id="chart1" class="w-full"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Chart 1 -->
-                            <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-gray-900 p-4 rounded-lg shadow">
-                                <h3 class="text-white font-semibold mb-2">Income</h3>
-                                <canvas id="chart1" class="w-full h-48"></canvas>
-                            </div>
-                        </div>
-                        <div class="col-span-4 md:col-span-1 lg:col-span-2 bg-white rounded-lg shadow p-4">
-                            <!-- Chart 2 -->
-                            <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-gray-900 p-4 rounded-lg shadow">
-                                <h3 class="text-white font-semibold mb-2">Expenses</h3>
-                                <canvas id="chart2" class="w-full h-48"></canvas>
-                            </div>
-                        </div>
-                        <div class="col-span-4 md:col-span-1 lg:col-span-2 bg-white rounded-lg shadow p-4">
-                            <!-- Chart 3 -->
-                            <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-gray-900 p-4 rounded-lg shadow">
-                                <h3 class="text-white font-semibold mb-2">Revenue</h3>
-                                <canvas id="chart3" class="w-full h-48"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-span-12 md:col-span-7 lg:col-span-6 bg-white rounded-lg shadow p-4"></div>
-                    <div class="col-span-12 md:col-span-5 lg:col-span-4 bg-white rounded-lg shadow p-6">Total Sales</div>
-                    <div class="col-span-12 lg:col-span-8 bg-white rounded-lg shadow p-6">Revenue Chart</div>
+                  
                 </div>
-            </main>
-        </div>
-    </body>
+              </div>
+              
+
+
+            <div class="col-span-12 lg:col-span-6 grid grid-cols-4 gap-6">
+              <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md p-4">
+                <!------------------iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii-->
+                <div class="bg-white rounded-full  w-full max-w-md card">
+                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4 mx-2">Customers</h2>
+                    <div class="flex items-end justify-between">
+                            <div class="flex w-full justify-between mx-2">
+                                <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">62,352</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-green-500 flex items-center gap-1 text-sm">
+                                        <img src="./assets/up.svg" alt="Up" width="12" height="7">
+                                        6.22%
+                                    </span>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div style="height:120px;">
+                        <canvas id="chart1"></canvas>
+                    </div>
+                </div>
+    <!------------------iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii-->
+
+              </div>
+              <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md p-4">
+                <div class="bg-white rounded-2xl w-full max-w-md mx-2 card">
+                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4">Order</h2>
+                    <div class="flex items-end justify-between">
+                        <div class="flex w-full justify-between mx-2">
+                            <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">58,672</p>
+                            <div class="flex items-center mt-2">
+                                <span class="text-green-500 flex items-center gap-1 text-sm">
+                                    <img src="./assets/up.svg" alt="Up" width="12" height="7">
+                                    6.22%
+                                </span>
+                            </div>
+                        </div>
+                    
+                </div>
+                    <div style="height:120px;">
+                        <canvas id="chart2"></canvas>
+                    </div>
+                </div>
+              </div>  
+              <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md  p-4">
+                <div class="bg-white rounded-2xl  w-full max-w-md mx-2 card">
+                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4">Earnings</h2>
+                    <div class="flex items-end justify-between">
+                        <div class="flex w-full justify-between mx-2">
+                            <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">$24,750</p>
+                            <div class="flex items-center mt-2">
+                                <span class="text-red-500 flex items-center gap-1 text-sm"> 
+                                    <img src="./assets/down.svg" alt="down" width="12" height="7">
+                                    6.22%
+                                </span>
+                            </div>
+                        </div>
+                    
+                </div>
+                    <div style="height:120px;">
+                        <canvas id="chart3"></canvas>
+                    </div>
+                </div>
+              </div>
+              <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md  p-4">
+                <div class="bg-white rounded-2xl  w-full max-w-md mx-2 card">
+                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4">Growth</h2>
+                    <div class="flex items-end justify-between">
+                        <div class="flex w-full justify-between mx-2">
+                            <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">+24.42%</p>
+                            <div class="flex items-center mt-2">
+                                <span class="text-red-500 flex items-center gap-1 text-sm"> 
+                                    <img src="./assets/down.svg" alt="down" width="12" height="7">
+                                    5.63%%
+                                </span>
+                            </div>
+                        </div>
+                    
+                </div>
+                    <div style="height:120px;">
+                        <canvas id="chart4"></canvas>
+                    </div>
+                </div>
+              </div>  
+            </div>
+      
+            <div class="col-span-12 md:col-span-7 lg:col-span-6 bg-white rounded-lg shadow p-4">Earnings</div>
+            <div class="col-span-12 md:col-span-5 lg:col-span-4 bg-white rounded-lg shadow p-6">Total Sales</div>
+            <div class="col-span-12 lg:col-span-8 bg-white rounded-lg shadow p-6">Revenue Chart</div>
+          </div>
+        </main>
+      </div>
+      
+ 
+    
+      <script>
+        function createLineChart(canvasId, labels, data, labelText, lineColor, fillColor) {
+          const ctx = document.getElementById(canvasId).getContext('2d');
+      
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: labelText,
+                data: data,
+                borderColor: lineColor,
+                backgroundColor: fillColor,
+                tension: 0.4,
+                fill: true,
+                pointRadius: 0,
+                pointBackgroundColor: lineColor,
+                pointBorderColor: '#fff',
+                pointBorderWidth: 0,
+                pointHoverRadius: 6,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  rtl: true,
+                  titleFont: { family: 'Vazirmatn' },
+                  bodyFont: { family: 'Vazirmatn' },
+                  callbacks: {
+                    label: function(context) {
+                      return labelText + ': ' + context.parsed.y;
+                    }
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  grid: { display: false },
+                  ticks: { display: false }
+                },
+                y: {
+                  display: false,
+                  grid: { display: false },
+                }
+              }
+            }
+          });
+        }
+      
+        document.addEventListener('DOMContentLoaded', function() {
+          const weekLabels = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
+      
+          createLineChart('chart1', weekLabels, [55, 58, 56, 59, 57, 60, 62], 'مشتریان', 'rgb(59, 130, 246, 0.6)', 'rgba(59, 130, 246, 0.1)');
+          createLineChart('chart2', weekLabels, [120, 135, 128, 140, 150, 160, 170], 'سفارشات', 'rgb(59, 130, 246, 0.6)', 'rgba(59, 130, 246, 0.1)');
+          createLineChart('chart3', weekLabels, [500, 620, 580, 700, 720, 690, 750], 'بازدیدها', 'rgb(239, 68, 68, 0.5)', 'rgba(239, 68, 68, 0.1)');
+          createLineChart('chart4', weekLabels, [220, 450, 590, 900, 120, 880, 110], 'eee', 'rgb(239, 68, 68, 0.5)', 'rgba(239, 68, 68, 0.1)');
+        });
+      </script>
+      
+  
+
+    
+
+    
+    
+  </body>
 </html>
+
+
+<!-- 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کارت آماری مشتریان با نمودار خطی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md card">
+       
+        
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-3xl font-bold text-gray-800">62,352</p>
+                <div class="flex items-center mt-2">
+                    <span class="text-green-500 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                        </svg>
+                        6.22%
+                    </span>
+                    <span class="text-gray-500 text-sm mr-2">از ماه گذشته</span>
+                </div>
+            </div>
+            
+            <div class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                افزایش
+            </div>
+        </div>
+        
+        <div class="mt-6" style="height: 120px;">
+            <canvas id="customerChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('customerChart').getContext('2d');
+            
+            // داده‌های نمودار
+            const data = [55, 58, 56, 59, 57, 60, 62];
+            
+            // ایجاد نمودار خطی
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'],
+                    datasets: [{
+                        label: 'تعداد مشتریان',
+                        data: data,
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 4,
+                        pointBackgroundColor: 'rgb(59, 130, 246)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 6,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            rtl: true,
+                            titleFont: {
+                                family: 'Vazirmatn'
+                            },
+                            bodyFont: {
+                                family: 'Vazirmatn'
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return 'مشتریان: ' + context.parsed.y;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Vazirmatn'
+                                }
+                            }
+                        },
+                        y: {
+                            display: false,
+                            grid: {
+                                display: false
+                            },
+                            suggestedMin: Math.min(...data) - 5,
+                            suggestedMax: Math.max(...data) + 5
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> -->
