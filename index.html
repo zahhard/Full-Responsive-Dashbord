@@ -28,7 +28,6 @@
 
       
 
- <!-- row-span-2 -->
     <!--grid-->
     <div class="flex">
         <!-- Sidebar -->
@@ -64,9 +63,7 @@
         
             items.forEach(item => {
                 item.addEventListener("click", function () {
-                    // پاک کردن active از همه
                     items.forEach(i => i.classList.remove("bg-gray-700", "border-l-4", "border-white"));
-                    // اضافه کردن active به آیتم انتخاب‌شده
                     this.classList.add("bg-gray-700", "border-l-4", "border-white");
                 });
             });
@@ -84,7 +81,8 @@
             
             
             <div class="col-span-12 rounded-lg bg-transparent ">
-                <div class="flex p-3 items-center justify-between gap-4">
+                <!-- header -->
+                <div class="flex px-3 items-center justify-between gap-4">
                   
                     <!-- Title -->
                     <div class="text-2xl font-bold text-black px-2">Dashboard</div>
@@ -120,92 +118,114 @@
                     </div>
                   
                 </div>
-              </div>
+            </div>
               
 
 
             <div class="col-span-12 lg:col-span-6 grid grid-cols-4 gap-6">
-              <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md p-4">
-                <div class="bg-white rounded-full  w-full max-w-md card">
-                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4 mx-2">Customers</h2>
-                    <div class="flex items-end justify-between">
-                            <div class="flex w-full justify-between mx-2">
-                                <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">62,352</p>
-                                <div class="flex items-center mt-2">
-                                    <span class="text-green-500 flex items-center gap-1 text-sm">
-                                        <img src="./assets/up.svg" alt="Up" width="12" height="7">
-                                        6.22%
-                                    </span>
+                <!-- diagram 1 -->
+                <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md">
+                    <div class="bg-white rounded-full  w-full flex flex-col h-full">
+                        <h2 class="text-gray-500 text-lg lg:text-sm font-medium my-4 mx-5">Customers</h2>
+                        <div class="flex items-end justify-between mx-5">
+                                <div class="flex w-full justify-between">
+                                    <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">62,352</p>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-green-500 flex items-center gap-1 text-sm">
+                                            <img src="./assets/up.svg" alt="Up" width="12" height="7">
+                                            6.22%
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        
-                    </div>
-                    <div style="height:120px;">
-                        <canvas id="chart1"></canvas>
+                            
+                        </div>
+                        <div class="mt-auto cursor-pointer px-4 pb-2">
+                            <canvas id="chart1" height="120"></canvas>
+                        </div>
                     </div>
                 </div>
 
+             <!-- diagram 2 -->
+            <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md">
+                <div class="bg-white rounded-2xl w-full flex flex-col h-full">
+                    
+                    <!-- Title -->
+                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium my-4 mx-5">Order</h2>
+                    
+                    <!-- Number + percent -->
+                    <div class="flex items-end justify-between mx-5">
+                    <div class="flex w-full justify-between">
+                        <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">58,672</p>
+                        <div class="flex items-center mt-2">
+                        <span class="text-green-500 flex items-center gap-1 text-sm">
+                            <img src="./assets/up.svg" alt="Up" width="12" height="7">
+                            6.22%
+                        </span>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- Chart -->
+                    <div class="mt-auto px-4 pb-2 h-[120px]">
+                    <canvas id="chart2" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- diagram 3 -->
+            <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md">
+                <div class="bg-white rounded-2xl w-full flex flex-col h-full">
+                  
+                  <!-- Title -->
+                  <h2 class="text-gray-500 text-lg lg:text-sm font-medium my-4 mx-5">Earnings</h2>
+                  
+                  <!-- Value + percent -->
+                  <div class="flex items-end justify-between mx-5">
+                    <div class="flex w-full justify-between">
+                      <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">$24,750</p>
+                      <div class="flex items-center mt-2">
+                        <span class="text-red-500 flex items-center gap-1 text-sm"> 
+                          <img src="./assets/down.svg" alt="Down" width="12" height="7">
+                          6.22%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Chart -->
+                  <div class="mt-auto px-4 pb-2 h-[120px]">
+                    <canvas id="chart3" class="w-full h-full"></canvas>
+                  </div>
+                </div>
+            </div>
+              
+            <!-- diagram 4 -->
+            <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md">
+                <div class="bg-white rounded-2xl w-full flex flex-col h-full">
+                  
+                  <!-- Title -->
+                  <h2 class="text-gray-500 text-lg lg:text-sm font-medium my-4 mx-5">Growth</h2>
+                  
+                  <!-- Value + percent -->
+                  <div class="flex items-end justify-between mx-5">
+                    <div class="flex w-full justify-between">
+                      <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">+24.42%</p>
+                      <div class="flex items-center mt-2">
+                        <span class="text-red-500 flex items-center gap-1 text-sm"> 
+                          <img src="./assets/down.svg" alt="Down" width="12" height="7">
+                          5.63%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Chart -->
+                  <div class="mt-auto px-4 pb-2 h-[120px]">
+                    <canvas id="chart4" class="w-full h-full"></canvas>
+                  </div>
+                </div>
               </div>
-              <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md p-4">
-                <div class="bg-white rounded-2xl w-full max-w-md mx-2 card">
-                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4">Order</h2>
-                    <div class="flex items-end justify-between">
-                        <div class="flex w-full justify-between mx-2">
-                            <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">58,672</p>
-                            <div class="flex items-center mt-2">
-                                <span class="text-green-500 flex items-center gap-1 text-sm">
-                                    <img src="./assets/up.svg" alt="Up" width="12" height="7">
-                                    6.22%
-                                </span>
-                            </div>
-                        </div>
-                    
-                </div>
-                    <div style="height:120px;">
-                        <canvas id="chart2"></canvas>
-                    </div>
-                </div>
-              </div>  
-              <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md  p-4">
-                <div class="bg-white rounded-2xl  w-full max-w-md mx-2 card">
-                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4">Earnings</h2>
-                    <div class="flex items-end justify-between">
-                        <div class="flex w-full justify-between mx-2">
-                            <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">$24,750</p>
-                            <div class="flex items-center mt-2">
-                                <span class="text-red-500 flex items-center gap-1 text-sm"> 
-                                    <img src="./assets/down.svg" alt="down" width="12" height="7">
-                                    6.22%
-                                </span>
-                            </div>
-                        </div>
-                    
-                </div>
-                    <div style="height:120px;">
-                        <canvas id="chart3"></canvas>
-                    </div>
-                </div>
-              </div>
-              <div class="col-span-4 md:col-span-2 lg:col-span-2 bg-white rounded-2xl shadow-md  p-4">
-                <div class="bg-white rounded-2xl  w-full max-w-md mx-2 card">
-                    <h2 class="text-gray-500 text-lg lg:text-sm font-medium mb-4">Growth</h2>
-                    <div class="flex items-end justify-between">
-                        <div class="flex w-full justify-between mx-2">
-                            <p class="text-3xl font-bold md:text-xl lg:text-2xl text-gray-800">+24.42%</p>
-                            <div class="flex items-center mt-2">
-                                <span class="text-red-500 flex items-center gap-1 text-sm"> 
-                                    <img src="./assets/down.svg" alt="down" width="12" height="7">
-                                    5.63%%
-                                </span>
-                            </div>
-                        </div>
-                    
-                </div>
-                    <div style="height:120px;">
-                        <canvas id="chart4"></canvas>
-                    </div>
-                </div>
-              </div>  
+               
             </div>
       
             <div class="col-span-12 md:col-span-7 lg:col-span-6 bg-white rounded-lg shadow p-4">
@@ -231,7 +251,7 @@
                         </div>
                     </div>
                     
-                    <div class="chart-container" style="height: 300px;">
+                    <div class="chart-container cursor-pointer" style="height: 300px;">
                         <canvas id="revenueChart"></canvas>
                     </div>
                     
@@ -322,12 +342,10 @@
                                             color: 'rgba(0, 0, 0, 0.05)'
                                         },
                                         ticks: {
-                                            // stepSize: 9000,
                                             font: {
                                                 family: 'Vazirmatn'
                                             },
                                             callback: function(value) {
-                                                // نمایش اعداد به صورت فرمت شده
                                                 if (value >= 10000) {
                                                     return (value / 1000) + 'k';
                                                 }
@@ -345,7 +363,7 @@
             </div>
             <div class="col-span-12 md:col-span-5 lg:col-span-4 bg-white rounded-lg shadow p-6">Total Sales
 
-                <div class="card w-full max-w-md flex">
+                <div class="card w-full max-w-md flex flex-row md:flex-col lg:flex-row justify-between">
                    
                     
                     <div class="p-5">
@@ -358,8 +376,7 @@
                                         <span class="mr-2 text-gray-700">Website</span>
                                     </div>
                             </div>
-                            
-                            <!-- آمازون -->
+
                             <div class="channel-item">
                                 <div class="flex items-center gap-2">
                                     <div class="bg-sky-400 p-2 rounded-lg">
@@ -369,7 +386,6 @@
                                 </div>
                             </div>
                             
-                            <!-- فلیپکارت -->
                             <div class="channel-item">
                                     <div class="flex items-center gap-2">
                                         <div class="bg-green-400 p-2 rounded-lg">
@@ -379,7 +395,6 @@
                                     </div>
                             </div>
                             
-                            <!-- توزیع‌کنندگان -->
                             <div class="channel-item">
                                     <div class="flex items-center gap-2">
                                         <div class="bg-yellow-300 p-2 rounded-lg">
@@ -390,7 +405,6 @@
                                
                             </div>
                             
-                            <!-- فروشگاه -->
                             <div class="channel-item">
                                     <div class="flex items-center gap-2">
                                         <div class="bg-red-400 p-2 rounded-lg">
@@ -405,10 +419,10 @@
                        
                     </div>
 
-                    <div class="card">
-                        <div class="mb-4" style="height: 220px;">
-                          <canvas id="revenueChartt"></canvas>
-                        </div>
+                    <div class="card cursor-pointer">
+                        <div class="mb-4 relative h-[220px]">
+                            <canvas id="revenueChartt" class="w-full h-full"></canvas>
+                          </div>
                       </div>
                       
                       
@@ -420,7 +434,6 @@
                             const data = [5000, 10000, 15000, 20000, 30000];
                             const labels = ['5%', '10%', '15%', '20%', '30%'];
                         
-                            // آرایه رنگ‌ها برای هر میله
                             const colors = [
                                 'rgba(139, 92, 246, 0.8)',
                                 'rgba(59, 130, 246, 0.8)',
@@ -462,9 +475,6 @@
                                             x: {
                                                 grid: { display: false },
                                                 ticks: { },
-                                                   // این دو گزینه باعث باریک شدن میله‌ها می‌شوند
-                                                barPercentage: 0.1,
-                                                categoryPercentage: 0.1
         
                                             },
                                             y: {
@@ -497,7 +507,79 @@
             </body>
             </html>
             </div>
-            <div class="col-span-12 lg:col-span-8 bg-white rounded-lg shadow p-6">Revenue Chart</div>
+            <div class="col-span-12 lg:col-span-8 bg-white rounded-lg shadow">
+                <div class="flex flex-col  ">
+                    <div class="flex justify-between items-center p-5">
+                        <h2 class="text-gray-500 text-lg lg:text-sm font-medium4 items-center justify-center">Top Selling Products</h2>
+                        <p class="text-blue-400 cursor-pointer hover:bg-gray-100  transition rounded-full items-center justify-center px-5 py-2">Download</p>
+                    </div>
+                    <div class="flex flex-col ">
+                        
+                        <style>
+                            .no-scrollbar::-webkit-scrollbar {
+                              display: none;
+                            }
+                        .no-scrollbar {
+                              -ms-overflow-style: none;  
+                              scrollbar-width: none;   
+                            }
+                          </style>
+                          
+                         <div class="max-h-96 lg:max-h-64 overflow-y-auto no-scrollbar border ">
+                            <table class="w-full p-0">
+                              <thead class="bg-gray-100 text-gray-700 sticky top-0">
+                                <tr>
+                                  <th class="px-4 py-4 text-left">Products</th>
+                                  <th class="px-4 py-4 text-left">Price</th>
+                                 <th class="px-4 py-4 text-left">Quantity</th>
+                                  <th class="px-4 py-4 text-left">Amount</th>
+                                </tr>
+                              </thead>
+                              <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                 <td class="px-4 py-4">Men's Regular Fit T-Shirt White</td>
+                                  <td class="px-4 py-4">$299</td>
+                                  <td class="px-4 py-4">32</td>
+                                  <td class="px-4 py-4">$9,546</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                 <td class="px-4 py-4">Men's Regular Fit T-Shirt White</td>
+                                  <td class="px-4 py-4">$299</td>
+                                  <td class="px-4 py-4">32</td>
+                                  <td class="px-4 py-4">$9,546</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-4">Men's Regular Fit T-Shirt White</td>
+                                  <td class="px-4 py-4">$299</td>
+                                  <td class="px-4 py-4">32</td>
+                                  <td class="px-4 py-4">$9,546</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                  <td class="px-4 py-4">Men's Regular Fit T-Shirt White</td>
+                                  <td class="px-4 py-4">$299</td>
+                                  <td class="px-4 py-4">32</td>
+                                  <td class="px-4 py-4">$9,546</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                  <td class="px-4 py-4">Men's Regular Fit T-Shirt White</td>
+                                  <td class="px-4 py-4">$299</td>
+                                  <td class="px-4 py-4">32</td>
+                                  <td class="px-4 py-4">$9,546</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                  <td class="px-4 py-4">Men's Regular Fit T-Shirt White</td>
+                                  <td class="px-4 py-4">$299</td>
+                                  <td class="px-4 py-4">32</td>
+                                  <td class="px-4 py-4">$9,546</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          
+                    </div>
+
+                </div>
+            </div>
           </div>
         </main>
       </div>
@@ -527,32 +609,36 @@
               }]
             },
             options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  rtl: true,
-                  titleFont: { family: 'Vazirmatn' },
-                  bodyFont: { family: 'Vazirmatn' },
-                  callbacks: {
-                    label: function(context) {
-                      return labelText + ': ' + context.parsed.y;
-                    }
-                  }
-                }
-              },
-              scales: {
-                x: {
-                  grid: { display: false },
-                  ticks: { display: false }
-                },
-                y: {
-                  display: false,
-                  grid: { display: false },
-                }
-              }
-            }
+  responsive: true,
+  maintainAspectRatio: false,
+  layout: {
+    padding: 0   // 🔥 حذف همه فاصله‌های داخلی
+  },
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      rtl: true,
+      titleFont: { family: 'Vazirmatn' },
+      bodyFont: { family: 'Vazirmatn' },
+      callbacks: {
+        label: function(context) {
+          return labelText + ': ' + context.parsed.y;
+        }
+      }
+    }
+  },
+  scales: {
+    x: {
+      grid: { display: false },
+      ticks: { display: false }
+    },
+    y: {
+      display: false,
+      grid: { display: false }
+    }
+  }
+}
+
           });
         }
       
